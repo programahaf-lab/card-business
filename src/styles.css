@@ -419,10 +419,10 @@ a {
   visibility: visible;
   pointer-events: none;
   transform:
-    translate3d(0, calc(var(--scene-drift, 0) * -54px), 0)
-    scale(calc(.94 + var(--scene-focus, 0) * .06));
-  filter: blur(calc((1 - var(--scene-focus, 0)) * 18px));
-  transition: opacity .8s var(--ease), transform .95s var(--ease), filter .95s var(--ease);
+    translate3d(0, calc(var(--scene-drift, 0) * -26px), 0)
+    scale(calc(.98 + var(--scene-focus, 0) * .02));
+  filter: none;
+  transition: opacity .38s var(--ease), transform .42s var(--ease);
 }
 
 .scene-panel.is-active {
@@ -432,29 +432,29 @@ a {
 .scene-copy {
   display: grid;
   gap: 18px;
-  transform: translateX(calc(var(--scene-drift, 0) * -18px));
-  opacity: calc(.34 + var(--scene-focus, 0) * .66);
-  transition: transform .9s var(--ease), opacity .9s var(--ease);
+  transform: translateX(calc(var(--scene-drift, 0) * -10px));
+  opacity: calc(.72 + var(--scene-focus, 0) * .28);
+  transition: transform .4s var(--ease), opacity .4s var(--ease);
 }
 
 .scene-copy h2 {
   max-width: 880px;
   margin: 0;
   font-family: "Sora", "Arial Narrow", sans-serif;
-  font-size: clamp(4rem, 8.4vw, 9.8rem);
+  font-size: clamp(2.9rem, 6vw, 6.8rem);
   font-weight: 700;
-  line-height: .8;
+  line-height: .88;
   letter-spacing: -.05em;
   text-transform: uppercase;
   text-wrap: balance;
-  max-width: 11ch;
+  max-width: 12ch;
 }
 
 .scene-copy span {
   max-width: 620px;
   color: var(--muted);
-  font-size: clamp(1rem, 1.4vw, 1.18rem);
-  line-height: 1.72;
+  font-size: clamp(.96rem, 1.18vw, 1.08rem);
+  line-height: 1.66;
   text-wrap: pretty;
 }
 
@@ -479,17 +479,19 @@ a {
   position: relative;
   width: min(100%, 520px);
   min-height: 420px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(243, 239, 231, .18);
   border-radius: 24px;
   padding: 28px;
   overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(255,122,89,.08), transparent 26%),
-    radial-gradient(circle at 70% 0%, rgba(255,255,255,.11), transparent 16rem),
-    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.018)),
-    var(--glass);
-  box-shadow: 0 36px 130px rgba(0,0,0,.58), inset 0 1px 0 rgba(255,255,255,.08), inset 0 -30px 80px rgba(140,188,255,.05);
-  backdrop-filter: blur(22px);
+    linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.035)),
+    linear-gradient(145deg, rgba(140,188,255,.08), rgba(255,122,89,.06) 44%, rgba(5,7,11,.88));
+  box-shadow:
+    0 22px 60px rgba(0,0,0,.42),
+    0 10px 24px rgba(0,0,0,.24),
+    inset 0 1px 0 rgba(255,255,255,.14),
+    inset -18px -18px 42px rgba(0,0,0,.18);
+  backdrop-filter: blur(12px);
 }
 
 .visual-card {
@@ -505,9 +507,9 @@ a {
   aspect-ratio: 1;
   border: 1px solid var(--line-strong);
   border-radius: 50%;
-  box-shadow: inset 0 0 46px rgba(255,255,255,.045);
+  box-shadow: inset 0 0 46px rgba(255,255,255,.05);
   transform: rotateX(68deg) scale(calc(.92 + var(--scene-focus, 0) * .16));
-  opacity: calc(.24 + var(--scene-focus, 0) * .76);
+  opacity: calc(.18 + var(--scene-focus, 0) * .46);
 }
 
 .visual-card__halo {
@@ -517,8 +519,8 @@ a {
   background:
     radial-gradient(circle, rgba(155,195,255,.18), transparent 46%),
     radial-gradient(circle at 60% 42%, rgba(255,255,255,.12), transparent 28%);
-  filter: blur(18px);
-  opacity: calc(.12 + var(--scene-focus, 0) * .48);
+  filter: blur(14px);
+  opacity: calc(.08 + var(--scene-focus, 0) * .2);
   transform: scale(calc(.88 + var(--scene-focus, 0) * .16));
 }
 
@@ -543,7 +545,7 @@ a {
   border-radius: 999px;
   padding: 8px 12px;
   color: var(--text);
-  background: rgba(3,3,3,.58);
+  background: rgba(7, 10, 16, .72);
   font-size: .7rem;
   letter-spacing: .12em;
   text-align: center;
@@ -552,7 +554,8 @@ a {
     rotate(calc(var(--i) * 42deg))
     translateY(calc(-118px - var(--i) * 3px + var(--shift, 0px)))
     rotate(calc(var(--i) * -42deg));
-  transition: transform .9s var(--ease), border-color .4s var(--ease), opacity .6s var(--ease);
+  box-shadow: 0 8px 22px rgba(0,0,0,.22);
+  transition: transform .45s var(--ease), border-color .3s var(--ease), opacity .3s var(--ease);
 }
 
 .visual-card.is-awake .tag-layer--current span {
@@ -562,8 +565,8 @@ a {
 .tag-layer--past span,
 .tag-layer--future span {
   border-style: dashed;
-  opacity: .38;
-  filter: blur(.2px);
+  opacity: .24;
+  filter: none;
 }
 
 .tag-layer--past span {
@@ -779,8 +782,8 @@ a {
   }
 
   .scene-copy h2 {
-    font-size: clamp(3rem, 15vw, 5.8rem);
-    max-width: 9ch;
+    font-size: clamp(2.6rem, 11vw, 4.8rem);
+    max-width: 10ch;
   }
 
   .visual-card,
