@@ -6,46 +6,46 @@ export const scenes = [
     id: "signals",
     number: "01",
     label: "Sinais",
-    kicker: "sinais vivos",
-    title: "A rotina ja esta falando.",
-    copy: "Atraso, estoque incerto, planilha paralela, retrabalho e decisao no improviso deixam rastros. A imersao comeca quando esses pontos param de parecer ruido.",
-    tags: ["atraso", "estoque", "planilha", "WhatsApp", "retrabalho", "decisao"]
+    kicker: "a rotina emite sinais",
+    title: "Antes do problema virar crise, ele ja deixa rastro.",
+    copy: "O atraso nao nasce no atraso. Ele aparece antes, espalhado em estoque incerto, planilha paralela, retrabalho, mensagens soltas e decisao no improviso. A entrada na imersao comeca quando esses sinais deixam de parecer ruido e passam a formar um campo vivo de leitura.",
+    tags: ["atraso", "estoque", "planilha", "mensagens", "retrabalho", "improviso"]
   },
   {
     id: "map",
     number: "02",
     label: "Mapa",
-    kicker: "mapa de clareza",
-    title: "Do ruido ao mapa.",
-    copy: "Antes da solucao, vem o fluxo. A dor vira sinal, o sinal vira oportunidade e a oportunidade aponta o tipo certo de tecnologia.",
-    tags: ["Dor", "Sinal", "Oportunidade"]
+    kicker: "o ruido ganha estrutura",
+    title: "Quando os sinais se conectam, o fluxo aparece.",
+    copy: "O que antes parecia pontual revela um desenho. A dor encontra origem, o gargalo mostra recorrencia e a operacao ganha contorno. Aqui, cada fragmento da cena anterior se organiza em mapa, para que a tecnologia entre no ponto certo e nao como camada extra de confusao.",
+    tags: ["origem", "fluxo", "gargalo", "recorrencia", "mapa", "clareza"]
   },
   {
     id: "validation",
     number: "03",
     label: "Validacao",
-    kicker: "solucao testada",
-    title: "A solucao nasce pequena e precisa.",
-    copy: "Dashboard, automacao, alerta, regra de negocio ou integracao entram como prototipos claros antes de virar compromisso operacional.",
-    tags: ["Dashboard", "Automacao", "Alerta", "Validar", "Testar", "Integrar"]
+    kicker: "clareza em forma de teste",
+    title: "A resposta nao entra grande. Ela entra precisa.",
+    copy: "Com o mapa visivel, a solucao deixa de ser abstrata. Dashboard, automacao, alerta, regra de negocio ou integracao surgem como prototipos enxutos, capazes de provar valor antes de ocupar a rotina inteira. Em vez de promessa ampla, a cena entrega direcao validada.",
+    tags: ["dashboard", "automacao", "alerta", "regra", "integracao", "prototipo"]
   },
   {
     id: "reading",
     number: "04",
     label: "Leitura",
-    kicker: "leitura inicial",
-    title: "Leia o sinal principal.",
-    copy: "Tres respostas bastam para apontar qual tipo de clareza pode estar faltando primeiro.",
-    tags: ["Fluxo", "Historico", "Indicador"]
+    kicker: "o visitante entra na analise",
+    title: "Agora o cenario responde de volta.",
+    copy: "Depois de percorrer sinais, mapa e validacao, a experiencia deixa de ser apenas observada. Tres respostas bastam para indicar qual tipo de clareza esta faltando primeiro e transformar a narrativa em leitura inicial da propria operacao.",
+    tags: ["leitura", "fluxo", "historico", "indicador", "diagnostico", "direcao"]
   },
   {
     id: "contact",
     number: "05",
     label: "Contato",
-    kicker: "proximo passo",
-    title: "Transforme rotina em clareza.",
-    copy: "O proximo passo e uma analise inicial para entender sua operacao, mapear dores e identificar solucoes aplicaveis ao seu dia a dia.",
-    tags: ["Resumo", "Contato", "Acao"]
+    kicker: "da imersao para a acao",
+    title: "O proximo passo e transformar leitura em desenho real.",
+    copy: "A jornada fecha quando o diagnostico deixa de ser sensacao e vira conversa aplicada. O contato nao interrompe a experiencia: ele continua a mesma linha de raciocinio para entender a operacao, mapear dores e definir solucoes viaveis no dia a dia.",
+    tags: ["resumo", "diagnostico", "contato", "acao", "proximo passo", "imersao"]
   }
 ];
 

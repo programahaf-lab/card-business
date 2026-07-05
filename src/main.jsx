@@ -21,6 +21,19 @@ ScrollTrigger.config({ ignoreMobileResize: true });
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const sceneCount = scenes.length;
+const getSceneMetrics = (progress, index) => {
+  const timeline = progress * (sceneCount - 1);
+  const distance = timeline - index;
+  const focus = clamp(1 - Math.abs(distance), 0, 1);
+  const drift = clamp(distance, -1.4, 1.4);
+  return {
+    distance,
+    focus,
+    drift,
+    entering: clamp(1 + distance, 0, 1),
+    leaving: clamp(1 - distance, 0, 1)
+  };
+};
 
 function useImmersiveScroll(enabled) {
   const [progress, setProgress] = useState(0);
@@ -240,10 +253,20 @@ function ExperienceCanvas({ progress, activeScene, pointer }) {
   );
 }
 
-function SceneOverlay({ scene, index, activeScene, result, onCopy }) {
+function SceneOverlay({ scene, index, progress, activeScene, result, onCopy }) {
+  const metrics = getSceneMetrics(progress, index);
   const isActive = index === activeScene;
   return (
-    <section className={`scene-panel ${isActive ? "is-active" : ""}`} aria-hidden={!isActive}>
+    <section
+      className={`scene-panel ${isActive ? "is-active" : ""}`}
+      aria-hidden={metrics.focus < 0.08}
+      style={{
+        "--scene-focus": metrics.focus.toFixed(3),
+        "--scene-drift": metrics.drift.toFixed(3),
+        "--scene-entering": metrics.entering.toFixed(3),
+        "--scene-leaving": metrics.leaving.toFixed(3)
+      }}
+    >
       <div className="scene-copy">
         <p>{scene.number} / {scene.kicker}</p>
         <h2>{scene.title}</h2>
@@ -254,21 +277,65 @@ function SceneOverlay({ scene, index, activeScene, result, onCopy }) {
       ) : scene.id === "contact" ? (
         <ContactCard result={result} onCopy={onCopy} />
       ) : (
-        <VisualCard scene={scene} active={isActive} />
+        <VisualCard scene={scene} index={index} progress={progress} active={isActive} />
       )}
     </section>
   );
 }
 
-function VisualCard({ scene, active }) {
+function VisualCard({ scene, index, progress, active }) {
+  const previousScene = scenes[index - 1];
+  const nextScene = scenes[index + 1];
+  const metrics = getSceneMetrics(progress, index);
+  const orbitShift = metrics.distance * 18;
+
   return (
     <div className={`visual-card visual-card--${scene.id} ${active ? "is-awake" : ""}`}>
+      <div className="visual-card__halo" />
       <div className="card-scan" />
-      {scene.tags.map((tag, index) => (
-        <span key={tag} style={{ "--i": index }}>
-          {tag}
-        </span>
-      ))}
+      {previousScene ? (
+        <div className="tag-layer tag-layer--past" aria-hidden="true">
+          {previousScene.tags.slice(0, 3).map((tag, tagIndex) => (
+            <span
+              key={`${scene.id}-past-${tag}`}
+              style={{ "--i": tagIndex, "--shift": `${orbitShift - 16}px` }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      ) : null}
+      <div className="tag-layer tag-layer--current">
+        {scene.tags.map((tag, tagIndex) => (
+          <span
+            key={tag}
+            style={{ "--i": tagIndex, "--shift": `${orbitShift}px` }}
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+      {nextScene ? (
+        <div className="tag-layer tag-layer--future" aria-hidden="true">
+          {nextScene.tags.slice(0, 3).map((tag, tagIndex) => (
+            <span
+              key={`${scene.id}-future-${tag}`}
+              style={{ "--i": tagIndex, "--shift": `${orbitShift + 16}px` }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      ) : null}
+      <div className="visual-card__caption">
+        <small>transicao de cenario</small>
+        <strong>{scene.kicker}</strong>
+      </div>
+      <div className="visual-card__bridge" aria-hidden="true">
+        <span>{previousScene?.label || "entrada"}</span>
+        <i />
+        <span>{nextScene?.label || "acao"}</span>
+      </div>
     </div>
   );
 }
@@ -384,7 +451,7 @@ function Navigation({ activeScene, progress, scrollToScene }) {
   );
 }
 
-function ScrollWorld({ activeScene, result, onCopy }) {
+function ScrollWorld({ activeScene, progress, result, onCopy }) {
   return (
     <main className="scroll-world" style={{ "--scene-count": scenes.length }}>
       <div className="sticky-stage">
@@ -393,6 +460,7 @@ function ScrollWorld({ activeScene, result, onCopy }) {
             key={scene.id}
             scene={scene}
             index={index}
+            progress={progress}
             activeScene={activeScene}
             result={result}
             onCopy={onCopy}
@@ -459,7 +527,7 @@ function App() {
       <div className="grain" aria-hidden="true" />
       <IntroGate phase={phase} onEnter={enter} />
       <Navigation activeScene={activeScene} progress={progress} scrollToScene={scrollToScene} />
-      <ScrollWorld activeScene={activeScene} result={result} onCopy={copySummary} />
+      <ScrollWorld activeScene={activeScene} progress={progress} result={result} onCopy={copySummary} />
       <div className={`copy-toast ${copyStatus ? "is-visible" : ""}`} role="status">
         {copyStatus}
       </div>
