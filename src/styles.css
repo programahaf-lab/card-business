@@ -415,26 +415,32 @@ a {
   align-items: center;
   gap: clamp(24px, 6vw, 86px);
   padding: 100px clamp(24px, 8vw, 120px) 90px clamp(150px, 14vw, 230px);
-  opacity: calc(.08 + var(--scene-focus, 0) * .98);
-  visibility: visible;
+  opacity: calc(var(--scene-focus, 0) * 1.08);
+  visibility: hidden;
   pointer-events: none;
   transform:
     translate3d(0, calc(var(--scene-drift, 0) * -26px), 0)
     scale(calc(.98 + var(--scene-focus, 0) * .02));
   filter: none;
-  transition: opacity .38s var(--ease), transform .42s var(--ease);
+  transition: opacity .32s var(--ease), transform .38s var(--ease), visibility 0s linear .32s;
 }
 
 .scene-panel.is-active {
+  visibility: visible;
   pointer-events: auto;
+}
+
+.scene-panel[aria-hidden="false"] {
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .scene-copy {
   display: grid;
   gap: 18px;
   transform: translateX(calc(var(--scene-drift, 0) * -10px));
-  opacity: calc(.72 + var(--scene-focus, 0) * .28);
-  transition: transform .4s var(--ease), opacity .4s var(--ease);
+  opacity: calc(max(0, (var(--scene-focus, 0) - .18) * 1.35));
+  transition: transform .32s var(--ease), opacity .24s var(--ease);
 }
 
 .scene-copy h2 {
