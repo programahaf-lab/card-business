@@ -122,17 +122,18 @@ function IntroGate({ phase, onEnter }) {
         <span />
       </div>
       <div className="intro-copy">
-        <p>private operational immersion</p>
+        <p>Toraka apresenta</p>
+        <strong className="intro-brand">TORAKA</strong>
         <h1 id="intro-title">Clareza para Decidir</h1>
         <button type="button" onClick={onEnter} aria-label="Entrar na imersao">
-          <span>ENTER</span>
+          <span>ENTRAR</span>
         </button>
         <small>{QR_CODE}</small>
       </div>
       <div className="intro-status" aria-hidden="true">
-        <span>signal</span>
-        <span>mapping</span>
-        <span>decision</span>
+        <span>gestão</span>
+        <span>automação</span>
+        <span>inteligência</span>
       </div>
     </section>
   );
@@ -167,7 +168,7 @@ function FieldParticles({ progress, activeScene, pointer }) {
 
     const positions = points.geometry.attributes.position.array;
     const t = clock.elapsedTime;
-    const morph = progress * 4;
+    const morph = progress * (sceneCount - 1);
     const local = morph - Math.floor(morph);
 
     for (let index = 0; index < particles.count; index += 1) {
@@ -188,7 +189,7 @@ function FieldParticles({ progress, activeScene, pointer }) {
         const pulse = Math.sin(t * 3 + index * 0.08) * 0.16;
         x *= 1 + pulse;
         y *= 0.48 + local * 0.3;
-      } else if (activeScene === 3) {
+      } else if (activeScene === sceneCount - 2) {
         x *= 1.8;
         y *= 0.28;
         z *= 0.12;
@@ -211,8 +212,8 @@ function FieldParticles({ progress, activeScene, pointer }) {
     shell.rotation.y += delta * (0.08 + progress * 0.12);
     shell.rotation.x = THREE.MathUtils.lerp(shell.rotation.x, pointer.current.y * 0.18, 0.04);
     shell.position.x = THREE.MathUtils.lerp(shell.position.x, window.innerWidth > 780 ? 0.72 : 0, 0.03);
-    shell.position.y = THREE.MathUtils.lerp(shell.position.y, activeScene === 4 ? -0.08 : 0, 0.03);
-    shell.scale.setScalar(THREE.MathUtils.lerp(shell.scale.x, activeScene === 0 ? 0.78 : activeScene === 4 ? 0.58 : 0.94, 0.035));
+    shell.position.y = THREE.MathUtils.lerp(shell.position.y, activeScene === sceneCount - 1 ? -0.08 : 0, 0.03);
+    shell.scale.setScalar(THREE.MathUtils.lerp(shell.scale.x, activeScene === 0 ? 0.78 : activeScene === sceneCount - 1 ? 0.58 : 0.94, 0.035));
     camera.position.z = THREE.MathUtils.lerp(camera.position.z, 4.2 - progress * 0.55, 0.025);
   });
 
@@ -293,7 +294,18 @@ function VisualCard({ scene, index, progress, active }) {
     <div className={`visual-card visual-card--${scene.id} ${active ? "is-awake" : ""}`}>
       <div className="visual-card__halo" />
       <div className="card-scan" />
-      {previousScene ? (
+      {scene.pillars ? (
+        <div className="pillar-grid">
+          {scene.pillars.map((pillar) => (
+            <article key={pillar.name}>
+              <small>frente</small>
+              <strong>{pillar.name}</strong>
+              <p>{pillar.detail}</p>
+            </article>
+          ))}
+        </div>
+      ) : null}
+      {previousScene && !scene.pillars ? (
         <div className="tag-layer tag-layer--past" aria-hidden="true">
           {previousScene.tags.slice(0, 3).map((tag, tagIndex) => (
             <span
@@ -305,7 +317,7 @@ function VisualCard({ scene, index, progress, active }) {
           ))}
         </div>
       ) : null}
-      <div className="tag-layer tag-layer--current">
+      <div className={`tag-layer tag-layer--current ${scene.pillars ? "is-hidden" : ""}`}>
         {scene.tags.map((tag, tagIndex) => (
           <span
             key={tag}
@@ -315,7 +327,7 @@ function VisualCard({ scene, index, progress, active }) {
           </span>
         ))}
       </div>
-      {nextScene ? (
+      {nextScene && !scene.pillars ? (
         <div className="tag-layer tag-layer--future" aria-hidden="true">
           {nextScene.tags.slice(0, 3).map((tag, tagIndex) => (
             <span
@@ -374,7 +386,7 @@ function Diagnosis() {
         <span>{diagnosisPhrases[result]}</span>
         <div className="diagnosis-actions">
           <a className="primary-action" href={buildWhatsAppLink(result)} target="_blank" rel="noreferrer">
-            <MessageCircle size={17} /> WhatsApp
+            <MessageCircle size={17} /> Agendar conversa
           </a>
           <button type="button" onClick={reset}>
             <RotateCcw size={16} /> Refazer
@@ -409,7 +421,7 @@ function ContactCard({ result, onCopy }) {
       <span>{result ? diagnosisPhrases[result] : "Complete a cena 04 para gerar um resumo antes do contato."}</span>
       <div className="diagnosis-actions">
         <a className="primary-action" href={buildWhatsAppLink(type)} target="_blank" rel="noreferrer">
-          <MessageCircle size={17} /> WhatsApp
+          <MessageCircle size={17} /> Agendar conversa
         </a>
         <button type="button" onClick={() => onCopy(type)}>Copiar resumo</button>
       </div>
@@ -424,7 +436,7 @@ function Navigation({ activeScene, progress, scrollToScene }) {
         <button type="button" onClick={() => scrollToScene(0)} aria-label="Voltar ao inicio">
           <Home size={17} />
         </button>
-        <span>Clareza para Decidir</span>
+        <span><b>TORAKA</b> · Clareza para Decidir</span>
         <strong>{QR_CODE}</strong>
       </header>
       <aside className="scene-rail" aria-label="Navegacao por cenas">
