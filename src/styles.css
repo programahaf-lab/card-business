@@ -205,6 +205,16 @@ a {
   text-shadow: 0 0 32px rgba(255,255,255,.08);
 }
 
+.intro-brand {
+  margin-bottom: -12px;
+  color: rgba(243, 239, 231, .82);
+  font-family: "Instrument Sans", sans-serif;
+  font-size: clamp(.9rem, 1.4vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: .62em;
+  text-indent: .62em;
+}
+
 .intro-copy button {
   width: 132px;
   height: 132px;
@@ -583,7 +593,7 @@ a {
   color: rgba(155,195,255,.72);
 }
 
-.visual-card--map .tag-layer--current span {
+.visual-card--diagnosis .tag-layer--current span {
   transform: translateX(calc((var(--i) - 1) * 128px));
 }
 
@@ -602,6 +612,47 @@ a {
     translateY(calc(-76px - var(--i) * 6px))
     rotate(calc(var(--i) * -18deg));
 }
+
+.tag-layer.is-hidden { display: none; }
+
+.pillar-grid {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  display: grid;
+  gap: 10px;
+}
+
+.pillar-grid article {
+  position: relative;
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  align-items: center;
+  gap: 5px 16px;
+  min-height: 92px;
+  border: 1px solid rgba(243, 239, 231, .14);
+  border-radius: 16px;
+  padding: 15px 18px;
+  overflow: hidden;
+  background: rgba(5, 7, 11, .64);
+  transition: border-color .3s var(--ease), transform .3s var(--ease), background .3s var(--ease);
+}
+
+.pillar-grid article::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(223, 185, 111, .1), transparent 45%, rgba(140, 188, 255, .08));
+  opacity: 0;
+  transition: opacity .3s var(--ease);
+}
+
+.pillar-grid article:hover { border-color: rgba(243, 239, 231, .36); background: rgba(12, 14, 20, .82); transform: translateX(6px); }
+.pillar-grid article:hover::after { opacity: 1; }
+.pillar-grid small, .pillar-grid strong, .pillar-grid p { position: relative; z-index: 1; }
+.pillar-grid small { grid-column: 1; color: var(--soft); font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; }
+.pillar-grid strong { grid-column: 1; color: var(--text); font-size: .9rem; letter-spacing: .08em; text-transform: uppercase; }
+.pillar-grid p { grid-column: 2; grid-row: 1 / span 2; margin: 0; color: var(--muted); font-size: .82rem; line-height: 1.45; }
 
 .visual-card__caption {
   position: absolute;
@@ -811,9 +862,11 @@ a {
       rotate(calc(var(--i) * -42deg));
   }
 
-  .visual-card--map .tag-layer--current span {
+  .visual-card--diagnosis .tag-layer--current span {
     transform: translateY(calc((var(--i) - 1) * 54px));
   }
+
+  .pillar-grid article { grid-template-columns: 82px 1fr; min-height: 74px; padding: 11px 13px; }
 
   .visual-card__caption,
   .visual-card__bridge {
